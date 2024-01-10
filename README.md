@@ -1,7 +1,11 @@
 ## Privacy Preserving Image Feature Extraction in TEE
 
-
-[TOC]
+- [Privacy Preserving Image Feature Extraction in TEE](#privacy-preserving-image-feature-extraction-in-tee)
+  - [00、Introduction](#00introduction)
+  - [01、Install Intel SGX](#01install-intel-sgx)
+  - [02、Install Occlum](#02install-occlum)
+  - [03、Run Python in Occlum](#03run-python-in-occlum)
+  - [04、Run the Image Feature Extraction Algorithm](#04run-the-image-feature-extraction-algorithm)
 
 ### 00、Introduction 
 
