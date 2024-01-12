@@ -23,7 +23,7 @@ Intel(R) Software Guard Extensions (Intel(R) SGX) is an Intel technology for app
 
 1. Check whether your machine support Intel SGX (you can also run the attached project: check_sgx.c);
 
-    ![14](TEE.assets/14.png)
+    ![14](image.assets/14.png)
 
    PS: As shown in the figure, sgx 1 supported: 1 indicates support, while 0 indicates lack of support.
 
@@ -61,7 +61,7 @@ If any issues arise during the installation process, you can refer to https://gi
 make  # hardware mode
 make SGX_MODE=SIM  # simulation mode
 ```
-![5](TEE.assets/5.png)
+![5](image.assets/5.png)
 
 + run the binary
 
@@ -69,7 +69,7 @@ make SGX_MODE=SIM  # simulation mode
 ./app
 ```
 
- ![6](TEE.assets/6.png)
+ ![6](image.assets/6.png)
 
 
 ### 02、Install Occlum
@@ -93,11 +93,11 @@ docker run --privileged -it --name=occlumdemo --device /dev/sgx/enclave occlum/o
 
 Success as shown in the figure.
 
-![13](TEE.assets/13.png)
+![13](image.assets/13.png)
 
 If it reports following errors, it means that the BIOS has not enabled SGX. You should check whether your machine supports Intel SGX. If yes, you can enable Intel SGX via the "software enable" procedure quickly. Please refer to https://github.com/intel/sgx-software-enable for more details.
 
-![17](TEE.assets/17.png)
+![17](image.assets/17.png)
 
 
 
@@ -131,7 +131,7 @@ occlum-gcc -o hello_world hello_world.c
 
 This will result in an executable file. You can test if it compiled successfully by running ./hello_world, which should output "Hello World."
 
- ![10](TEE.assets/10.png)
+ ![10](image.assets/10.png)
 
 + **step-2 :** initialize an Occlum instance
 
@@ -140,7 +140,7 @@ mkdir occlum-instance && cd occlum-instance && occlum init
 occlum new occlum-instance # alternatively
 ```
 
- ![12](TEE.assets/12.png)
+ ![12](image.assets/12.png)
 
 + **step-3 :** copy the compiled file (executable hello_world) into the occlum-instance/image/bin/ folder
 
@@ -155,7 +155,7 @@ occlum build  # hardware mode
 occlum build --sgx-mode SIM  # simulation mode
 ```
 
- ![4](TEE.assets/4.png)
+ ![4](image.assets/4.png)
 
 + **step-5 :** run the Occlum instance
 
@@ -164,7 +164,7 @@ occlum build --sgx-mode SIM  # simulation mode
 occlum run /bin/hello_world
 ```
 
- ![11](TEE.assets/11.png)
+ ![11](image.assets/11.png)
 
 
 
@@ -214,11 +214,11 @@ Using the attached project, i.e., np, as an example.
 - run.sh：script for initializing the Occlum instance and generating Occlum images.
 - code：source code directory (modify if there are relative paths; adjust based on the Occlum images' paths).
 
- ![15](TEE.assets/15.png)
+ ![15](image.assets/15.png)
 
 + **step-1 :** modify the .yaml file (shown in the following red box), that indicates copying the `../code` directory to `/bin` (relative to path `occlum_instance/images`).
 
-![3](TEE.assets/3.png)
+![3](image.assets/3.png)
 
 + **step-2 :** run the script init.sh
 
@@ -226,7 +226,7 @@ Using the attached project, i.e., np, as an example.
 ./init.sh
 ```
 
- ![16](TEE.assets/16.png)
+ ![16](image.assets/16.png)
 
 + **step-3 :** run the script build.sh
 
@@ -234,7 +234,7 @@ Using the attached project, i.e., np, as an example.
 ./build.sh
 ```
 
- ![7](TEE.assets/7.png)
+ ![7](image.assets/7.png)
 
 + **step-4 :** run the script run.sh
 
@@ -242,7 +242,7 @@ Using the attached project, i.e., np, as an example.
 ./run.sh
 ```
 
- ![8](TEE.assets/8.png)
+ ![8](image.assets/8.png)
 
 
 
@@ -254,7 +254,7 @@ Using the attached project, i.e., sgx_demo. Note that sgx_demo is an simple demo
 
 + **step-1 :**  modify the source code to limit thread count and change the relative path of the image.
 
- ![1](TEE.assets/1.png)
+ ![1](image.assets/1.png)
 
 + **step-2 :**  write the scripts for openCV
 
@@ -307,4 +307,4 @@ script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" >/dev/null 2>&1 && pwd )"
 ./run.sh
 ```
 
- ![9](TEE.assets/9.png)
+ ![9](image.assets/9.png)
