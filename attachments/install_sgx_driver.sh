@@ -38,32 +38,38 @@ if [[ -x /opt/intel/sgx-aesm-service/cleanup.sh ]]; then
     /opt/intel/sgx-aesm-service/cleanup.sh
 fi
 
-echo "install $DCAP_SGX_DERIVER_URL..."
-rm -f /tmp/sgx_linux_x64_driver.bin
-curl -fsSL "$DCAP_SGX_DERIVER_URL" -o /tmp/sgx_linux_x64_driver.bin
-chmod +x /tmp/sgx_linux_x64_driver.bin
-mkdir -p /opt/intel
-/tmp/sgx_linux_x64_driver.bin
-rm -f /tmp/sgx_linux_x64_driver.bin
+# Linux kernel version v5.11 and higher versions have built-in support for the DCAP SGX driver.
+# Therefore, you don't need to (and shouldn't try to) manually install the DCAP / OOT drivers.
+# Run the following command to check if the matching kernel headers are installed:
+# Check if the matching kernel headers are installed
+if dpkg-query -s linux-headers-$(uname -r); then
+    echo "Matching kernel headers already installed."
+else
+    echo "Matching kernel headers not found. Installing..."
+    sudo apt-get install -y linux-headers-$(uname -r)
+fi
 
-echo "install $OOT_SGX_DERIVER_URL..."
-rm -f /tmp/sgx_linux_x64_driver.bin
-curl -fsSL "$OOT_SGX_DERIVER_URL" -o /tmp/sgx_linux_x64_driver.bin
-chmod +x /tmp/sgx_linux_x64_driver.bin
-mkdir -p /opt/intel
-/tmp/sgx_linux_x64_driver.bin
-rm -f /tmp/sgx_linux_x64_driver.bin
+# If the kernel version is lower than v5.11, execute the following script to install the SGX driver:
+# echo "install $DCAP_SGX_DERIVER_URL..."
+# rm -f /tmp/sgx_linux_x64_driver.bin
+# curl -fsSL "$DCAP_SGX_DERIVER_URL" -o /tmp/sgx_linux_x64_driver.bin
+# chmod +x /tmp/sgx_linux_x64_driver.bin
+# mkdir -p /opt/intel
+# /tmp/sgx_linux_x64_driver.bin
+# rm -f /tmp/sgx_linux_x64_driver.bin
+
+# echo "install $OOT_SGX_DERIVER_URL..."
+# rm -f /tmp/sgx_linux_x64_driver.bin
+# curl -fsSL "$OOT_SGX_DERIVER_URL" -o /tmp/sgx_linux_x64_driver.bin
+# chmod +x /tmp/sgx_linux_x64_driver.bin
+# mkdir -p /opt/intel
+# /tmp/sgx_linux_x64_driver.bin
+# rm -f /tmp/sgx_linux_x64_driver.bin
 
 if [[ -x /opt/intel/sgx-aesm-service/startup.sh ]]; then
     /opt/intel/sgx-aesm-service/startup.sh
 fi
 
-echo "start sgx-service /opt/intel/sgx-aesm-service/startup.sh"
+echo "Starting SGX service with /opt/intel/sgx-aesm-service/startup.sh"
+echo "SGX driver installation was successful"
 
-
-Linux 内核版本 v5.11 及更高版本内置了支持 DCAP 的 SGX 驱动程序，因此您不必（也不应该尝试）手动安装 DCAP 驱动程序。
-请通过运行以下命令检查是否安装了匹配的内核头：
-dpkg-query -s linux-headers-$(uname -r)
-
-然后要安装匹配的标头，请运行以下命令：
-sudo apt-get install linux-headers-$(uname -r)
