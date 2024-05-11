@@ -57,3 +57,13 @@ rm -f /tmp/sgx_linux_x64_driver.bin
 if [[ -x /opt/intel/sgx-aesm-service/startup.sh ]]; then
     /opt/intel/sgx-aesm-service/startup.sh
 fi
+
+echo "start sgx-service /opt/intel/sgx-aesm-service/startup.sh"
+
+
+Linux 内核版本 v5.11 及更高版本内置了支持 DCAP 的 SGX 驱动程序，因此您不必（也不应该尝试）手动安装 DCAP 驱动程序。
+请通过运行以下命令检查是否安装了匹配的内核头：
+dpkg-query -s linux-headers-$(uname -r)
+
+然后要安装匹配的标头，请运行以下命令：
+sudo apt-get install linux-headers-$(uname -r)
