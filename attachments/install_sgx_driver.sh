@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-DCAP_SGX_DRIVER_VERSION="1.41"
-OOT_SGX_DRIVER_VERSION="2.11.54c9c4c"
+DCAP_SGX_DRIVER_VERSION="1.41"  # Check the URL: https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu{your_version}-server/
+OOT_SGX_DRIVER_VERSION="2.11.b6f5b4a" # Check the URL: https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu{your_version}-server/
 
 set -eo pipefail
 
@@ -27,9 +27,17 @@ elif [[ "$RELEASE_INFO" = *"Ubuntu 22.04"* ]]; then
     OS="Ubuntu-22.04"
     DCAP_SGX_DERIVER_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_driver_$DCAP_SGX_DRIVER_VERSION.bin"
     OOT_SGX_DERIVER_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_driver_$OOT_SGX_DRIVER_VERSION.bin"
+elif [[ "$RELEASE_INFO" = *"Ubuntu 24.04"* ]]; then
+    OS="Ubuntu-24.04"
+    DCAP_SGX_DERIVER_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_driver_$DCAP_SGX_DRIVER_VERSION.bin"
+    OOT_SGX_DERIVER_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_driver_$OOT_SGX_DRIVER_VERSION.bin"
 else
-    error "Ubuntu 18.04, 20.04, or 22.04 is required."
+    error "Ubuntu 18.04, 20.04, 22.04, or 24.04 is required."
 fi
+
+echo "DCAP SGX Driver Version: $DCAP_SGX_DRIVER_VERSION"
+echo "OOT SGX Driver Version: $OOT_SGX_DRIVER_VERSION"
+echo "Ubuntu Version: $OS"
 
 apt-get update -y
 apt-get install -y dkms

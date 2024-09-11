@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SGX_SDK_VERSION="2.22.100.3"
+SGX_SDK_VERSION="2.24.100.3" # Check the URL: https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu{your_version}-server/
 
 set -eo pipefail
 
@@ -20,9 +20,15 @@ elif [[ "$RELEASE_INFO" = *"Ubuntu 20.04"* ]]; then
     OS="Ubuntu-20.04"
 elif [[ "$RELEASE_INFO" = *"Ubuntu 22.04"* ]]; then
     OS="Ubuntu-22.04"
+elif [[ "$RELEASE_INFO" = *"Ubuntu 24.04"* ]]; then
+    OS="Ubuntu-24.04"
 else
-    error "Ubuntu 18.04, 20.04, or 22.04 is required."
+    error "Ubuntu 18.04, 20.04, 22.04, or 24.04 is required."
 fi
+
+# Output the SGX SDK version and Ubuntu version
+echo "SGX SDK Version: $SGX_SDK_VERSION"
+echo "Ubuntu Version: $OS"
 
 apt-get update -y
 apt-get upgrade -y
@@ -40,6 +46,10 @@ case "$OS" in
         SGX_SDK_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu20.04-server/sgx_linux_x64_sdk_$SGX_SDK_VERSION.bin"
         ;;
     "Ubuntu-22.04")
+        echo "deb [arch=amd64] https://download.01.org/intel-sgx/sgx_repo/ubuntu jammy main" > /etc/apt/sources.list.d/intel-sgx.list
+        SGX_SDK_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_sdk_$SGX_SDK_VERSION.bin"
+        ;;
+    "Ubuntu-24.04")
         echo "deb [arch=amd64] https://download.01.org/intel-sgx/sgx_repo/ubuntu jammy main" > /etc/apt/sources.list.d/intel-sgx.list
         SGX_SDK_URL="https://download.01.org/intel-sgx/latest/linux-latest/distro/ubuntu22.04-server/sgx_linux_x64_sdk_$SGX_SDK_VERSION.bin"
         ;;
